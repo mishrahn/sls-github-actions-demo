@@ -6,19 +6,19 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Productiondeploy
+  productionDeployment:
+    name: production deployment
     runs-on: ubuntu-latest
     environment:
       name: Production
       url: https:te
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci

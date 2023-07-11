@@ -3,7 +3,7 @@ frameworkVersion: "2"
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   lambdaHashingVersion: 20201221
   stage: ${opt:stage, 'dev'}
   region: us-east-1
@@ -60,22 +60,22 @@ functions:
           path: notes/{id}
           authorizer: authorizer
 
-  getAllNotes:
-    handler: handler.getAllNotes
-    environment:
-      NOTES_TABLE_NAME: !Ref notesTable
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:Scan
-        Resource: !GetAtt notesTable.Arn
-    events:
-      - http:
-          method: get
-          path: notes
-          authorizer:
-            name: userpool_authorizer
-            arn: ${ssm:/notes/${self:provider.stage}/userPoolArn}
+  # getAllNotes:
+  #   handler: handler.getAllNotes
+  #   environment:
+  #     NOTES_TABLE_NAME: !Ref notesTable
+  #   iamRoleStatements:
+  #     - Effect: Allow
+  #       Action:
+  #         - dynamodb:Scan
+  #       Resource: !GetAtt notesTable.Arn
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: notes
+  #         authorizer:
+  #           name: userpool_authorizer
+  #           arn: ${ssm:/notes/${self:provider.stage}/userPoolArn}
 
 plugins:
   - serverless-iam-roles-per-function
